@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lemp Brewery Complex — St. Louis, MO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brick:    #8B4A2F;
+      --charcoal: #1A1A1A;
+      --dark:     #111111;
+      --mid:      #2C2C2C;
+      --panel:    #232323;
+      --gold:     #C9A84C;
+      --gold-lt:  #E2C06D;
+      --cream:    #F2EBD9;
+      --text:     #D4CCC0;
+      --muted:    #8A8278;
+      --radius:   4px;
+      --max:      1280px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: var(--cream); line-height: 1.2; }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { color: var(--gold-lt); }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 40px; }
+
+    /* ── NAV ──────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(17,17,17,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 40px;
+      height: 72px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--cream); letter-spacing: 0.03em; }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { background: var(--gold); color: var(--dark) !important; padding: 10px 22px; border-radius: var(--radius); font-weight: 600 !important; }
+    .nav-cta:hover { background: var(--gold-lt) !important; }
+
+    /* ── HERO ─────────────────────────────────────────────────── */
+    .hero { position: relative; height: 100vh; min-height: 680px; display: flex; align-items: flex-end; overflow: hidden; }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(17,17,17,0.25) 0%, rgba(17,17,17,0.65) 60%, rgba(17,17,17,1) 100%),
+        url('assets/exterior-campus.jpg') center 40% / cover no-repeat;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: var(--max); margin: 0 auto; padding: 0 40px 80px; width: 100%; }
+    .hero-tag { display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,168,76,0.5); padding: 6px 16px; border-radius: 2px; margin-bottom: 24px; }
+    .hero h1 { font-size: clamp(2.6rem, 5.5vw, 5rem); font-weight: 700; max-width: 760px; margin-bottom: 24px; }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+    .hero-sub { font-size: 1.05rem; color: var(--text); max-width: 500px; margin-bottom: 40px; font-weight: 300; }
+    .hero-stats { display: flex; gap: 48px; margin-bottom: 40px; flex-wrap: wrap; }
+    .stat-number { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); display: block; }
+    .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .btn { display: inline-block; padding: 14px 32px; border-radius: var(--radius); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.2s; cursor: pointer; }
+    .btn-primary { background: var(--gold); color: var(--dark); }
+    .btn-primary:hover { background: var(--gold-lt); color: var(--dark); }
+    .btn-outline { border: 1px solid rgba(201,168,76,0.5); color: var(--cream); background: transparent; }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .section-divider { width: 60px; height: 2px; background: var(--gold); margin: 0 0 32px; }
+    .section-divider.center { margin: 0 auto 32px; }
+
+    /* ── ABOUT ────────────────────────────────────────────────── */
+    .about { padding: 120px 0; background: var(--charcoal); position: relative; overflow: hidden; }
+    .about::before { content: ''; position: absolute; top: 0; right: 0; width: 40%; height: 100%; background: linear-gradient(135deg, transparent 40%, rgba(139,74,47,0.06) 100%); pointer-events: none; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .about-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    .about h2 { font-size: clamp(2rem, 3vw, 2.8rem); margin-bottom: 32px; }
+    .about p { color: var(--text); margin-bottom: 20px; font-size: 0.97rem; font-weight: 300; line-height: 1.85; }
+    .about-right { display: flex; flex-direction: column; gap: 32px; padding-top: 60px; }
+
+    .about-photo { width: 100%; aspect-ratio: 4/3; border-radius: 2px; overflow: hidden; border: 1px solid rgba(201,168,76,0.15); }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .timeline { display: flex; flex-direction: column; gap: 20px; }
+    .timeline-item { display: grid; grid-template-columns: 72px 1fr; gap: 16px; align-items: start; }
+    .timeline-year { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); padding-top: 2px; }
+    .timeline-text { font-size: 0.88rem; color: var(--muted); line-height: 1.65; border-left: 1px solid rgba(201,168,76,0.2); padding-left: 16px; }
+
+    /* ── AMENITIES ────────────────────────────────────────────── */
+    .amenities { padding: 80px 0; background: var(--panel); border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .amenities-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+    .amenity-item { text-align: center; }
+    .amenity-icon { font-size: 1.8rem; margin-bottom: 12px; display: block; }
+    .amenity-title { font-size: 0.88rem; font-weight: 600; color: var(--cream); margin-bottom: 6px; }
+    .amenity-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── SPACES ───────────────────────────────────────────────── */
+    .spaces { padding: 120px 0; background: var(--dark); }
+    .spaces-header { text-align: center; margin-bottom: 56px; }
+    .spaces-header h2 { font-size: clamp(2rem, 3vw, 2.8rem); margin-bottom: 16px; }
+    .spaces-header p { color: var(--muted); font-size: 0.97rem; max-width: 520px; margin: 0 auto 40px; }
+
+    .filter-bar { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 48px; }
+    .filter-btn { background: transparent; border: 1px solid rgba(201,168,76,0.3); color: var(--muted); padding: 8px 22px; border-radius: 24px; font-size: 0.73rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+    .filter-btn:hover { border-color: var(--gold); color: var(--cream); }
+    .filter-btn.active { background: var(--gold); border-color: var(--gold); color: var(--dark); font-weight: 600; }
+
+    .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 28px; }
+
+    .listing-card { background: var(--panel); border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
+    .listing-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+    .listing-card.hidden { display: none; }
+
+    .card-photo { width: 100%; aspect-ratio: 16/9; background: var(--mid); overflow: hidden; position: relative; }
+    .card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+    .listing-card:hover .card-photo img { transform: scale(1.04); }
+
+    .card-type-badge { position: absolute; top: 12px; left: 12px; background: rgba(17,17,17,0.85); border: 1px solid rgba(201,168,76,0.4); color: var(--gold); font-size: 0.63rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 5px 12px; border-radius: 2px; }
+    .card-avail-badge { position: absolute; top: 12px; right: 12px; background: rgba(30,70,45,0.92); border: 1px solid rgba(80,180,100,0.35); color: #7FD99A; font-size: 0.63rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 2px; }
+
+    .card-body { padding: 22px 24px; }
+    .card-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--cream); margin-bottom: 6px; }
+    .card-location { font-size: 0.76rem; color: var(--muted); letter-spacing: 0.05em; margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
+    .card-location::before { content: '◈'; color: var(--gold); font-size: 0.6rem; }
+
+    .card-specs { display: flex; gap: 24px; margin-bottom: 14px; flex-wrap: wrap; }
+    .spec-value { font-size: 1rem; font-weight: 600; color: var(--cream); font-family: 'Playfair Display', serif; display: block; }
+    .spec-label { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+
+    .card-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+
+    .card-features { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
+    .feature-tag { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); color: var(--gold); font-size: 0.63rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
+
+    .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .card-price { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--gold); }
+    .card-price span { font-family: 'Inter', sans-serif; font-size: 0.7rem; color: var(--muted); font-weight: 400; }
+    .card-btn { background: transparent; border: 1px solid rgba(201,168,76,0.4); color: var(--gold); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 18px; border-radius: var(--radius); cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+    .card-btn:hover { background: var(--gold); color: var(--dark); }
+
+    .no-results { grid-column: 1 / -1; text-align: center; padding: 80px 0; color: var(--muted); display: none; }
+
+    /* ── PHOTO STRIP ──────────────────────────────────────────── */
+    .photo-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; height: 340px; }
+    .photo-strip-item { overflow: hidden; }
+    .photo-strip-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
+    .photo-strip-item:hover img { transform: scale(1.05); }
+    .photo-strip-item.tall { grid-row: span 2; }
+
+    /* ── LOCATION ─────────────────────────────────────────────── */
+    .location { padding: 120px 0; background: var(--charcoal); }
+    .location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .location h2 { font-size: clamp(2rem, 3vw, 2.8rem); margin-bottom: 24px; }
+    .location p { color: var(--text); font-weight: 300; line-height: 1.85; margin-bottom: 16px; font-size: 0.97rem; }
+    .location-details { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+    .location-detail { display: flex; align-items: flex-start; gap: 14px; font-size: 0.9rem; color: var(--text); }
+    .detail-icon { color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+
+    .map-embed { width: 100%; aspect-ratio: 4/3; border-radius: 4px; border: 1px solid rgba(201,168,76,0.15); overflow: hidden; }
+    .map-embed iframe { width: 100%; height: 100%; border: 0; display: block; filter: grayscale(0.3) contrast(1.05); }
+
+    /* ── CONTACT ──────────────────────────────────────────────── */
+    .contact { padding: 120px 0; background: var(--dark); text-align: center; }
+    .contact h2 { font-size: clamp(2rem, 3vw, 2.8rem); margin-bottom: 16px; }
+    .contact-sub { color: var(--muted); font-size: 0.97rem; max-width: 480px; margin: 0 auto 56px; }
+    .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 860px; margin: 0 auto; }
+    .contact-card { background: var(--panel); border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; padding: 36px 28px; transition: border-color 0.2s; }
+    .contact-card:hover { border-color: rgba(201,168,76,0.3); }
+    .contact-card-icon { font-size: 1.4rem; margin-bottom: 14px; }
+    .contact-card-title { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .contact-card-value { font-size: 0.92rem; color: var(--cream); line-height: 1.6; }
+    .contact-card-value a { color: var(--cream); }
+    .contact-card-value a:hover { color: var(--gold); }
+
+    /* ── FOOTER ───────────────────────────────────────────────── */
+    footer { background: var(--charcoal); border-top: 1px solid rgba(255,255,255,0.06); padding: 48px 0; }
+    .footer-inner { max-width: var(--max); margin: 0 auto; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--cream); }
+    .footer-logo span { color: var(--gold); }
+    .footer-copy { font-size: 0.76rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { font-size: 0.76rem; color: var(--muted); letter-spacing: 0.06em; }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ───────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .container { padding: 0 24px; }
+      .nav-inner { padding: 0 24px; }
+      .nav-links { display: none; }
+      .about-grid, .location-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-right { padding-top: 0; }
+      .amenities-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; max-width: 420px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .photo-strip { height: 220px; }
+    }
+    @media (max-width: 600px) {
+      .hero-content { padding: 0 24px 60px; }
+      .hero-stats { gap: 24px; }
+      .listings-grid { grid-template-columns: 1fr; }
+      .amenities-grid { grid-template-columns: 1fr; }
+      .photo-strip { grid-template-columns: 1fr 1fr; height: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-logo">Lemp <span>Brewery</span> Complex</div>
+      <ul class="nav-links">
+        <li><a href="#about">History</a></li>
+        <li><a href="#spaces">Available Spaces</a></li>
+        <li><a href="#location">Location</a></li>
+        <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-tag">St. Louis, Missouri · Est. 1838</div>
+      <h1>Where <em>Industrial History</em><br>Meets Modern Opportunity</h1>
+      <p class="hero-sub">Over one million square feet of iconic brick architecture available for lease in the heart of South St. Louis.</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">1M+</span>
+          <span class="stat-label">Sq Ft Total</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">30+</span>
+          <span class="stat-label">Buildings</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">1838</span>
+          <span class="stat-label">Year Founded</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">20+</span>
+          <span class="stat-label">Ft Ceilings</span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="#spaces" class="btn btn-primary">View Available Spaces</a>
+        <a href="#about" class="btn btn-outline">Our History</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / HISTORY -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <div class="about-label">Est. 1838 · St. Louis, Missouri</div>
+          <h2>A Legacy Built in Brick and Ambition</h2>
+          <div class="section-divider"></div>
+          <p>In 1838, German immigrant Adam Lemp planted the seeds of what would become one of America's most storied brewing empires. Starting with a modest underground lager cellar dug into the St. Louis hillside, Lemp leveraged the city's natural limestone caves — ideal for cold-fermenting lager beer — to build a revolutionary operation at a time when most Americans still drank warm ales.</p>
+          <p>By the 1870s, under William Lemp Sr., the Western Brewery had exploded in scale. The family constructed a sweeping complex of massive brick buildings: cold storage vaults, fermentation cellars, bottling houses, stables, and offices — all interconnected by underground tunnels and overhead conveyor systems that were decades ahead of their time. At its peak, the Lemp Brewery was one of the largest in the United States, shipping beer across the country before mechanical refrigeration made that commonplace.</p>
+          <p>Tragedy and Prohibition brought the dynasty to an end in the 1920s. The Lemp family sold the complex for a fraction of its worth in 1922, and the buildings spent decades as a warehouse and manufacturing campus. Yet the bones endured — hand-laid brick walls, vast arched window bays, timber-and-iron structural frames, and mile upon mile of underground passages that today's tenants still explore with awe.</p>
+          <p>Today, the Lemp Brewery Complex stands as one of St. Louis's most compelling adaptive reuse opportunities. Its buildings offer extraordinary character that simply cannot be replicated — high ceilings, dramatic masonry, natural light flooding through original factory windows — paired with modern infrastructure that makes it ready for the next century of commerce.</p>
+        </div>
+        <div class="about-right">
+          <div class="about-photo">
+            <img src="assets/exterior-arched.jpg" alt="Lemp Brewery exterior with arched windows" />
+          </div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-year">1838</div>
+              <div class="timeline-text">Adam Lemp opens a grocery and beer cellar, introducing lager beer to St. Louis.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">1864</div>
+              <div class="timeline-text">William Lemp Sr. completes the main complex on Cherokee Street — the largest brewery in the Midwest.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">1893</div>
+              <div class="timeline-text">Lemp ships over 500,000 barrels annually; one of the top five breweries in the United States.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">1919</div>
+              <div class="timeline-text">Prohibition forces closure. The Lemp family shutters operations almost overnight.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">Today</div>
+              <div class="timeline-text">Over 1 million sq ft of historic industrial space — reimagined for modern tenants.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO STRIP -->
+  <div class="photo-strip">
+    <div class="photo-strip-item">
+      <img src="assets/exterior-alley.jpg" alt="Lemp Brewery alley with string lights" />
+    </div>
+    <div class="photo-strip-item">
+      <img src="assets/aerial-1.png" alt="Aerial view of Lemp Brewery Complex" />
+    </div>
+    <div class="photo-strip-item">
+      <img src="assets/exterior-smokestack.jpg" alt="Lemp Brewery smokestack courtyard" />
+    </div>
+  </div>
+
+  <!-- AMENITIES -->
+  <section class="amenities">
+    <div class="container">
+      <div class="amenities-grid">
+        <div class="amenity-item">
+          <span class="amenity-icon">🧱</span>
+          <div class="amenity-title">Historic Masonry Construction</div>
+          <div class="amenity-desc">Hand-laid brick walls, limestone foundations, and original timber framing throughout the complex.</div>
+        </div>
+        <div class="amenity-item">
+          <span class="amenity-icon">⬆️</span>
+          <div class="amenity-title">High Ceiling Heights</div>
+          <div class="amenity-desc">Soaring original ceilings across most buildings — ideal for mezzanines, storage, and open-plan design.</div>
+        </div>
+        <div class="amenity-item">
+          <span class="amenity-icon">🚛</span>
+          <div class="amenity-title">Industrial Load Capacity</div>
+          <div class="amenity-desc">Reinforced concrete floors rated for industrial and warehouse operations throughout the campus.</div>
+        </div>
+        <div class="amenity-item">
+          <span class="amenity-icon">🔌</span>
+          <div class="amenity-title">Flexible Space Types</div>
+          <div class="amenity-desc">Studios, offices, warehouses, event halls, and industrial bays — across 30+ buildings on one campus.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       LISTINGS DATA
+       To add a space: copy one block and update the fields.
+       To remove a leased space: delete the block.
+
+       type options: "studio" | "office" | "warehouse"
+       price: monthly total estimate
+  ====================================================== -->
+  <script>
+  const LISTINGS = [
+    {
+      id: "lb-11-201",
+      name: "Unit 201 — Studio / Event Space",
+      type: "studio",
+      building: "Building 11 · 2nd Floor",
+      sqft: 12000,
+      floor: "2nd Floor",
+      price: "$1,275",
+      available: "Now",
+      desc: "Massive 12,000 SF open-plan floor with soaring ceilings, rows of factory windows, and sweeping raw industrial character. Ideal for studios, production, events, storage, or large creative operations.",
+      features: ["12,000 SF", "Factory Windows", "Studio / Event", "Stair Access"],
+      photo: "assets/unit-11-12ksf.jpg"
+    },
+    {
+      id: "lb-12-201",
+      name: "Units 201–202 — Studio / Office",
+      type: "studio",
+      building: "Building 12 · 2nd Floor",
+      sqft: 3000,
+      floor: "2nd Floor",
+      price: "$1,050",
+      available: "Now",
+      desc: "Versatile 3,000 SF open-plan loft with large factory windows and industrial character. New shop lighting included. Perfect for creative studios, offices, woodworking, photography, and more.",
+      features: ["New Lighting", "Factory Windows", "Open Plan", "Stair Access"],
+      photo: "assets/unit-12-3ksf.jpg"
+    },
+    {
+      id: "lb-12-204",
+      name: "Unit 204 — Studio",
+      type: "studio",
+      building: "Building 12 · 2nd Floor",
+      sqft: 800,
+      floor: "2nd Floor",
+      price: "$660",
+      available: "Now",
+      desc: "800 SF studio loft with strong electrical service. Well-suited for light manufacturing, metalworking, woodworking, or creative studio work.",
+      features: ["Good Electric", "Studio Use", "Stair Access"],
+      photo: "assets/unit-12-800sf.jpg"
+    },
+    {
+      id: "lb-12-203b",
+      name: "Unit 203B — Studio",
+      type: "studio",
+      building: "Building 12 · 2nd Floor",
+      sqft: 400,
+      floor: "2nd Floor",
+      price: "$410",
+      available: "Now",
+      desc: "Intimate 400 SF studio on the 2nd floor of Building 12. Ideal for individual artists, photographers, or small creative businesses.",
+      features: ["Studio Use", "Natural Light", "Stair Access"],
+      photo: "assets/unit-12-400sf.jpg"
+    },
+    {
+      id: "lb-12-1b",
+      name: "Unit 1B — Storage",
+      type: "warehouse",
+      building: "Building 12 · 1st Floor",
+      sqft: 280,
+      floor: "1st Floor",
+      price: "$310",
+      available: "Now",
+      desc: "Compact first-floor storage unit in Building 12. Ideal for secure commercial storage needs. Ground-floor access.",
+      features: ["Ground Floor", "Commercial Storage", "Zoned H Commercial"],
+      photo: "assets/unit-12-280sf.jpg"
+    },
+    {
+      id: "lb-16-east",
+      name: "East Suite — Office",
+      type: "office",
+      building: "Building 16 · 2nd Floor",
+      sqft: 5000,
+      floor: "2nd Floor",
+      price: "$3,050",
+      available: "Now",
+      desc: "Expansive 5,000 SF office suite with hardwood floors, pendant lighting, and semi-finished interior. Floor and restroom repairs plus HVAC maintenance to be completed during prep.",
+      features: ["Hardwood Floors", "Pendant Lights", "HVAC", "Stair Access"],
+      photo: "assets/unit-16-2nd-suites.jpg"
+    },
+    {
+      id: "lb-16-mid",
+      name: "Middle Suite — Office",
+      type: "office",
+      building: "Building 16 · 2nd Floor",
+      sqft: 2150,
+      floor: "2nd Floor",
+      price: "$1,300",
+      available: "Now",
+      desc: "2,150 SF mid-floor office suite with hardwood floors, pendant lighting, and built-in dividers. Can be subdivided or opened up. Restroom and HVAC to be prepped.",
+      features: ["Hardwood Floors", "Subdividable", "Pendant Lights", "Stair Access"],
+      photo: "assets/unit-16-2nd-suites.jpg"
+    },
+    {
+      id: "lb-16-west",
+      name: "West Suite — Office",
+      type: "office",
+      building: "Building 16 · 2nd Floor",
+      sqft: 1150,
+      floor: "2nd Floor",
+      price: "$800",
+      available: "Now",
+      desc: "1,150 SF west-facing office suite with hardwood floors and good natural light. Restroom and HVAC to be prepped prior to occupancy.",
+      features: ["Hardwood Floors", "Natural Light", "Office Use", "Stair Access"],
+      photo: "assets/unit-16-2nd-suites.jpg"
+    },
+    {
+      id: "lb-16-301",
+      name: "Unit 301 — Studio",
+      type: "studio",
+      building: "Building 16 · 3rd Floor",
+      sqft: 900,
+      floor: "3rd Floor",
+      price: "$535",
+      available: "Now",
+      desc: "Stunning 900 SF studio with original arched windows with stained details, painted brick walls, and wood floors. Ornate architectural character unlike anything else in the complex.",
+      features: ["Arched Windows", "Wood Floors", "Historic Detail", "Stair Access"],
+      photo: "assets/unit-16-900sf.jpg"
+    },
+    {
+      id: "lb-16-303",
+      name: "Unit 303 — Studio",
+      type: "studio",
+      building: "Building 16 · 3rd Floor",
+      sqft: 680,
+      floor: "3rd Floor",
+      price: "$535",
+      available: "Now",
+      desc: "680 SF studio space on the 3rd floor of Building 16 with historic industrial character and natural light throughout.",
+      features: ["Studio Use", "Natural Light", "Stair Access"],
+      photo: "assets/unit-16-680sf.jpg"
+    },
+    {
+      id: "lb-16-305",
+      name: "Unit 305 — Studio",
+      type: "studio",
+      building: "Building 16 · 3rd Floor",
+      sqft: 350,
+      floor: "3rd Floor",
+      price: "$285",
+      available: "Now",
+      desc: "Affordable 350 SF studio on the 3rd floor of Building 16. Great entry-level creative space in the heart of the Lemp complex.",
+      features: ["Studio Use", "Affordable", "Stair Access"],
+      photo: "assets/unit-16-350sf.jpg"
+    },
+    {
+      id: "lb-22a-01",
+      name: "Whole Floor — Large Vehicle / Industrial",
+      type: "warehouse",
+      building: "Building 22A · 1st Floor",
+      sqft: 2600,
+      floor: "1st Floor",
+      price: "$1,485",
+      available: "Now",
+      desc: "2,600 SF open industrial floor with high ceilings, exposed brick, and drive-through access. Well-suited for large vehicle storage, fleet operations, or heavy industrial use.",
+      features: ["Drive-In Access", "High Ceilings", "Vehicle Storage", "Industrial"],
+      photo: "assets/unit-22a-2600sf.jpg"
+    },
+    {
+      id: "lb-19-01",
+      name: "Whole Floor — Industrial / Vehicle Storage",
+      type: "warehouse",
+      building: "Building 19 · 1st Floor",
+      sqft: 1225,
+      floor: "1st Floor",
+      price: "$785",
+      available: "Now",
+      desc: "1,225 SF ground-floor industrial space with drive-in access. Zoned H Commercial, suited for vehicle storage, industrial operations, or light manufacturing.",
+      features: ["Ground Floor", "Drive-In Access", "Vehicle Storage"],
+      photo: "assets/unit-19-1225sf.jpg"
+    }
+  ];
+  </script>
+
+  <!-- AVAILABLE SPACES -->
+  <section class="spaces" id="spaces">
+    <div class="container">
+      <div class="spaces-header">
+        <div class="about-label">Leasing Opportunities</div>
+        <h2>Available Spaces</h2>
+        <div class="section-divider center"></div>
+        <p>Explore available units across the complex — from intimate creative studios to massive industrial floor plates.</p>
+        <div class="filter-bar" id="filterBar">
+          <button class="filter-btn active" data-type="all">All Spaces</button>
+          <button class="filter-btn" data-type="studio">Studio / Creative</button>
+          <button class="filter-btn" data-type="office">Office</button>
+          <button class="filter-btn" data-type="warehouse">Warehouse / Industrial</button>
+        </div>
+      </div>
+      <div class="listings-grid" id="listingsGrid">
+        <div class="no-results" id="noResults">No spaces match this filter.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location" id="location">
+    <div class="container">
+      <div class="location-grid">
+        <div>
+          <div class="about-label">South St. Louis, Missouri</div>
+          <h2>In the Heart of the City</h2>
+          <div class="section-divider"></div>
+          <p>The Lemp Brewery Complex sits at the intersection of Cherokee Street and Lemp Avenue in South St. Louis — one of the city's most vibrant and walkable neighborhoods. Minutes from downtown with easy highway access and proximity to public transit.</p>
+          <p>The surrounding Cherokee Street corridor is home to a thriving mix of restaurants, galleries, and independent businesses, making the complex a natural destination for tenants who value character and community.</p>
+          <div class="location-details">
+            <div class="location-detail">
+              <span class="detail-icon">📍</span>
+              3300 S. 13th Street, St. Louis, MO 63118
+            </div>
+            <div class="location-detail">
+              <span class="detail-icon">🛣️</span>
+              Minutes from I-55 and I-44 interchange
+            </div>
+            <div class="location-detail">
+              <span class="detail-icon">🚌</span>
+              MetroBus stops on Cherokee Street
+            </div>
+            <div class="location-detail">
+              <span class="detail-icon">🅿️</span>
+              On-site and surface parking available
+            </div>
+          </div>
+        </div>
+        <div class="map-embed">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3119.3!2d-90.2205!3d38.5989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87d8b3e3d5a1b1b1%3A0x1234567890abcdef!2sLemp+Brewery+Complex%2C+St.+Louis%2C+MO!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="about-label">Get In Touch</div>
+      <h2>Ready to Explore the Complex?</h2>
+      <div class="section-divider center"></div>
+      <p class="contact-sub">We'd love to show you around. Contact us to schedule a tour, request floor plans, or discuss leasing terms.</p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-card-icon">📧</div>
+          <div class="contact-card-title">Email</div>
+          <div class="contact-card-value">
+            <a href="mailto:leasing@lempbrewerycomplex.com">leasing@lempbrewerycomplex.com</a>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">📞</div>
+          <div class="contact-card-title">Phone</div>
+          <div class="contact-card-value">
+            <a href="tel:+13145550000">(314) 555-0000</a>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">📍</div>
+          <div class="contact-card-title">Address</div>
+          <div class="contact-card-value">3300 S. 13th Street<br>St. Louis, MO 63118</div>
+        </div>
+      </div>
+      <div style="margin-top: 48px;">
+        <a href="mailto:leasing@lempbrewerycomplex.com" class="btn btn-primary" style="margin-right: 16px;">Schedule a Tour</a>
+        <a href="#spaces" class="btn btn-outline">Browse Listings</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Lemp <span>Brewery</span> Complex</div>
+      <div class="footer-copy">© 2026 Lemp Brewery Complex · St. Louis, MO</div>
+      <ul class="footer-links">
+        <li><a href="#about">History</a></li>
+        <li><a href="#spaces">Spaces</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- JS: Render & Filter -->
+  <script>
+    const TYPE_LABELS = {
+      studio: 'Studio / Creative',
+      office: 'Office',
+      warehouse: 'Warehouse / Industrial'
+    };
+
+    function buildCard(s) {
+      const features = s.features.map(f => `<span class="feature-tag">${f}</span>`).join('');
+      return `
+        <div class="listing-card" data-type="${s.type}">
+          <div class="card-photo">
+            <img src="${s.photo}" alt="${s.name}" loading="lazy" />
+            <div class="card-type-badge">${TYPE_LABELS[s.type] || s.type}</div>
+            <div class="card-avail-badge">${s.available === 'Now' ? 'Available Now' : 'Avail. ' + s.available}</div>
+          </div>
+          <div class="card-body">
+            <div class="card-name">${s.name}</div>
+            <div class="card-location">${s.building}</div>
+            <div class="card-specs">
+              <div class="spec-item">
+                <span class="spec-value">${s.sqft.toLocaleString()}</span>
+                <span class="spec-label">Sq Ft</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-value">${s.floor}</span>
+                <span class="spec-label">Floor</span>
+              </div>
+            </div>
+            <div class="card-desc">${s.desc}</div>
+            <div class="card-features">${features}</div>
+            <div class="card-footer">
+              <div class="card-price">${s.price} <span>/mo est. total</span></div>
+              <button class="card-btn" onclick="inquire('${s.id}','${s.name.replace(/'/g,"\\'")}')">Inquire</button>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    const grid = document.getElementById('listingsGrid');
+    const noResults = document.getElementById('noResults');
+
+    function renderListings(filter) {
+      grid.innerHTML = LISTINGS.map(s => buildCard(s)).join('') + noResults.outerHTML;
+      let visible = 0;
+      grid.querySelectorAll('.listing-card').forEach(card => {
+        const show = filter === 'all' || card.dataset.type === filter;
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+      document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    document.getElementById('filterBar').addEventListener('click', function(e) {
+      if (!e.target.classList.contains('filter-btn')) return;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      renderListings(e.target.dataset.type);
+    });
+
+    function inquire(id, name) {
+      const sub = encodeURIComponent('Leasing Inquiry — ' + name);
+      const body = encodeURIComponent('Hello,\n\nI am interested in the following space:\n\n' + name + '\n\nPlease send more information and available times for a tour.\n\nThank you.');
+      window.location.href = `mailto:leasing@lempbrewerycomplex.com?subject=${sub}&body=${body}`;
+    }
+
+    renderListings('all');
+  </script>
+
+</body>
+</html>
